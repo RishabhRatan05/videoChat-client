@@ -37,4 +37,4 @@ class PeerService {
   }
 }
 
-export default Peer = new PeerService()
+export default new PeerService()

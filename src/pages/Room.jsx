@@ -13,7 +13,7 @@ const Room = () => {
     const {ws,  myStream, remoteStream, sendStreams, setMyStream,remoteSocketId, handleCallUser} = useContext(RoomContext)
 
     useEffect(()=>{
-        ws.emit('join-room',{roomId, peerId : me})
+        ws.emit('join-room',{roomId, peerId : ''})
     },[roomId,ws])
 
     const handleCopy=()=>{
