@@ -17,7 +17,7 @@ const Room = () => {
     },[roomId,ws])
 
     const handleCopy=()=>{
-      navigator.clipboard.writeText(`${process.env.REACT_APP_URL}/room/${roomId}`)
+      navigator.clipboard.writeText(`${process.env.REACT_APP_URL}room/${roomId}`)
       toast('Copied to clipboard')
     }
     const handleSend=()=>{
