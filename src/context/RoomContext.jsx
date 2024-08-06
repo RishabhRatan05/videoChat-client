@@ -1,18 +1,14 @@
 import { createContext, useCallback, useEffect, useReducer, useState } from "react";
 import socketIO from "socket.io-client"
 import { useNavigate } from 'react-router-dom'
-import { v4 as uuid } from "uuid";
 import Peer from '../service/peer';
 import { peerReducer } from "./peerReducer";
-import { addPeerAction } from "./peerActions";
-const URL = "http://localhost:5000"
 
 const ws= socketIO(process.env.REACT_APP_SERVER_URL)
 export const RoomContext = createContext()
 
 const RoomProvider = ({children})=>{
     const navigate = useNavigate()
-    const [me,setMe] = useState()
     const [remoteSocketId, setRemoteSocketId] = useState(null);
     const [myStream, setMyStream] = useState();
     const [remoteStream, setRemoteStream] = useState();
@@ -51,7 +47,7 @@ const RoomProvider = ({children})=>{
         } catch (error) {
             console.error(error.message)
         }
-    },[ws])
+    },[])
 
     const sendStreams = useCallback(() => {
         if(myStream){for (const track of myStream.getTracks()) {
@@ -130,9 +126,9 @@ const RoomProvider = ({children})=>{
             ws.off("peer:nego:final", handleNegoNeedFinal);
 
         }
-    },[])
+    },[enterRoom,handleCallAccepted,handleIncomingCall,handleNegoNeedFinal,handleNegoNeedIncomming,handleUserJoined])
     return(
-        <RoomContext.Provider value={{ws, me, myStream, remoteStream,remoteSocketId, sendStreams,setMyStream, peers, handleCallUser}}>
+        <RoomContext.Provider value={{ws, myStream, remoteStream,remoteSocketId, sendStreams,setMyStream, peers, handleCallUser}}>
             {children}
         </RoomContext.Provider>
     )

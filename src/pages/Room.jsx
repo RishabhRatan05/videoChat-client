@@ -10,12 +10,11 @@ const Room = () => {
     const {roomId} = useParams()
     const navigate = useNavigate()
     const [calling,setCalling] = useState(true)
-    const {ws, me, myStream, remoteStream, sendStreams, setMyStream,remoteSocketId, handleCallUser} = useContext(RoomContext)
+    const {ws,  myStream, remoteStream, sendStreams, setMyStream,remoteSocketId, handleCallUser} = useContext(RoomContext)
 
     useEffect(()=>{
-      console.log('me',me)
         ws.emit('join-room',{roomId, peerId : me})
-    },[roomId, me])
+    },[roomId,ws])
 
     const handleCopy=()=>{
       navigator.clipboard.writeText(`${process.env.REACT_APP_URL}/room/${roomId}`)
