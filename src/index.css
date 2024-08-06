@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+
+@layer components{
+    .animation-pl{
+        letter-spacing: 2px;
+        border-right: 2px solid white;
+        overflow: hidden; 
+        width: 100%;
+        white-space: nowrap;
+        animation: 
+            typing 4s,
+            cursor .4s step-end infinite alternate;
+    }
+
+    @keyframes cursor {
+        50%{ 
+            border-color: transparent;
+        }
+    }
+
+    @keyframes typing {
+        from {width: 0}
+    }
+}
+
+@tailwind utilities;
