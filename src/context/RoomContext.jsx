@@ -11,7 +11,6 @@ const RoomProvider = ({children})=>{
     const [remoteSocketId, setRemoteSocketId] = useState(null);
     const [myStream, setMyStream] = useState();
     const [remoteStream, setRemoteStream] = useState();
-    const [peers, dispatch] = useReducer(peerReducer,{})
 
     const enterRoom=({roomId, from})=>{
         console.log('user id',from)
