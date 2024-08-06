@@ -89,12 +89,6 @@ const RoomProvider = ({children})=>{
 
 
     useEffect(()=>{
-        ws.on('room-created',enterRoom)
-        return (
-            ws.off('room-created',enterRoom)
-    )
-    },[])
-    useEffect(()=>{
         Peer.peer.addEventListener("track", async (ev) => {
         const remoteStream = ev.streams;
         console.log("GOT TRACKS!!");
@@ -103,6 +97,7 @@ const RoomProvider = ({children})=>{
         });
 
         ws.on('user-joined',handleUserJoined)
+        ws.on('room-created',enterRoom)
         ws.on('incoming-call',handleIncomingCall)
         // ws.on('get-users',getUsers)
         ws.on('call-accepted',handleCallAccepted)
@@ -110,6 +105,7 @@ const RoomProvider = ({children})=>{
         ws.on("peer:nego:final", handleNegoNeedFinal);
             return()=>{
             ws.off('user-joined',handleUserJoined)
+            ws.off('room-created',enterRoom)
             ws.off('incoming-call',handleIncomingCall)
             // ws.off('get-users',getUsers)       
             ws.off('call-accepted',handleCallAccepted)
@@ -117,7 +113,7 @@ const RoomProvider = ({children})=>{
             ws.off("peer:nego:final", handleNegoNeedFinal);
 
         }
-    },[handleCallAccepted,handleIncomingCall,handleNegoNeedFinal,handleNegoNeedIncomming,handleUserJoined])
+    },[])
     return(
         <RoomContext.Provider value={{ws, myStream, remoteStream,remoteSocketId, sendStreams,setMyStream, handleCallUser}}>
             {children}
