@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useReducer, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import socketIO from "socket.io-client"
 import { useNavigate } from 'react-router-dom'
 import Peer from '../service/peer';
@@ -88,7 +88,12 @@ const RoomProvider = ({children})=>{
   }, []); 
 
 
-
+    useEffect(()=>{
+        ws.on('room-created',enterRoom)
+        return (
+            ws.off('room-created',enterRoom)
+    )
+    },[])
     useEffect(()=>{
         Peer.peer.addEventListener("track", async (ev) => {
         const remoteStream = ev.streams;
@@ -99,7 +104,6 @@ const RoomProvider = ({children})=>{
 
         ws.on('user-joined',handleUserJoined)
         ws.on('incoming-call',handleIncomingCall)
-        ws.on('room-created',enterRoom)
         // ws.on('get-users',getUsers)
         ws.on('call-accepted',handleCallAccepted)
         ws.on("peer:nego:needed", handleNegoNeedIncomming);
@@ -107,7 +111,6 @@ const RoomProvider = ({children})=>{
             return()=>{
             ws.off('user-joined',handleUserJoined)
             ws.off('incoming-call',handleIncomingCall)
-            ws.off('room-created',enterRoom)
             // ws.off('get-users',getUsers)       
             ws.off('call-accepted',handleCallAccepted)
             ws.off("peer:nego:needed", handleNegoNeedIncomming);
