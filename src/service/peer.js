@@ -36,5 +36,6 @@ class PeerService {
     }
   }
 }
+const Peer = new PeerService()
 
-export default new PeerService()
+export default Peer

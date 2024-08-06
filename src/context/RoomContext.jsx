@@ -2,7 +2,6 @@ import { createContext, useCallback, useEffect, useReducer, useState } from "rea
 import socketIO from "socket.io-client"
 import { useNavigate } from 'react-router-dom'
 import Peer from '../service/peer';
-import { peerReducer } from "./peerReducer";
 
 const ws= socketIO(process.env.REACT_APP_SERVER_URL)
 export const RoomContext = createContext()
@@ -31,7 +30,7 @@ const RoomProvider = ({children})=>{
         const offer = await Peer.getOffer();
         ws.emit("user-call", { to: remoteSocketId, offer });
         setMyStream(stream);
-    }, [remoteSocketId, ws]);
+    }, [remoteSocketId]);
 
     const handleIncomingCall = useCallback( async ({from,offer})=>{
         try {
@@ -68,7 +67,7 @@ const RoomProvider = ({children})=>{
     const handleNegoNeeded = useCallback(async () => {
         const offer = await Peer.getOffer();
         ws.emit("peer:nego:needed", { offer, to: remoteSocketId });
-    }, [remoteSocketId, ws]);
+    }, [remoteSocketId]);
 
   useEffect(() => {
     Peer.peer.addEventListener("negotiationneeded", handleNegoNeeded);
@@ -82,7 +81,7 @@ const RoomProvider = ({children})=>{
       const ans = await Peer.getAnswer(offer);
       ws.emit("peer:nego:done", { to: from, ans });
     },
-    [ws]
+    []
   );
 
   const handleNegoNeedFinal = useCallback(async ({ ans }) => {
@@ -91,23 +90,13 @@ const RoomProvider = ({children})=>{
 
 
 
-    useEffect(() => {
+    useEffect(()=>{
         Peer.peer.addEventListener("track", async (ev) => {
         const remoteStream = ev.streams;
         console.log("GOT TRACKS!!");
         console.log('remote',remoteStream)
         setRemoteStream(remoteStream[0]);
         });
-    }, [
-    ws,
-    handleUserJoined,
-    handleIncomingCall,
-    handleCallAccepted,
-    handleNegoNeedIncomming,
-    handleNegoNeedFinal,
-  ]);
-
-    useEffect(()=>{
 
         ws.on('user-joined',handleUserJoined)
         ws.on('incoming-call',handleIncomingCall)
@@ -126,9 +115,9 @@ const RoomProvider = ({children})=>{
             ws.off("peer:nego:final", handleNegoNeedFinal);
 
         }
-    },[enterRoom,handleCallAccepted,handleIncomingCall,handleNegoNeedFinal,handleNegoNeedIncomming,handleUserJoined])
+    },[handleCallAccepted,handleIncomingCall,handleNegoNeedFinal,handleNegoNeedIncomming,handleUserJoined])
     return(
-        <RoomContext.Provider value={{ws, myStream, remoteStream,remoteSocketId, sendStreams,setMyStream, peers, handleCallUser}}>
+        <RoomContext.Provider value={{ws, myStream, remoteStream,remoteSocketId, sendStreams,setMyStream, handleCallUser}}>
             {children}
         </RoomContext.Provider>
     )
