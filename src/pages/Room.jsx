@@ -143,7 +143,7 @@ const Room = () => {
     handleNegoNeedFinal,
   ]);
   return (
-    <div className='bg-gradient-to-tr from-[#179BAE] to bg-purple-500 '>
+    <div className='bg-gradient-to-tr from-[#179BAE] to bg-purple-500 sm:h-screen'>
       <ToastContainer/>
       <div className='mx-4'>
         <div className='text-purple-400'>

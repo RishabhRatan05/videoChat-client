@@ -9,7 +9,7 @@ const Home = () => {
     const [room,setRoom] =useState()
     const [email,setEmail] = useState()
     const handleJoinRoom= useCallback((e)=>{
-      e.preventDefault()
+      e.preventDefault()  
         socket.emit('room:join',{email,room})
         navigate(`/room/${room}`);
     },[room,email,socket])
@@ -38,7 +38,7 @@ const Home = () => {
             focus:border-green-300 rounded-sm 
             placeholder:text-slate-200
             px-2 
-            border-sky-300 border-2 bg-transparent' placeholder='email'></input>
+            border-sky-300 border-2 bg-transparent' placeholder='Name'></input>
           <input type='text' value={room} 
             required={true}
             onChange={e=>setRoom(e.target.value)}
@@ -49,11 +49,11 @@ const Home = () => {
             focus:border-green-300 rounded-sm 
             placeholder:text-slate-200
             px-2 
-            border-sky-300 border-2 bg-transparent' placeholder='room'></input>
+            border-sky-300 border-2 bg-transparent' placeholder='Room'></input>
           </div>
         </div>
     <button className='
-    bg-green-400 text-white rounded-lg cursor-pointer hover:bg-green-500 ease-in duration-75 p-2'>Start New Meet</button>
+    bg-green-400 text-white rounded-lg cursor-pointer hover:bg-green-500 ease-in duration-75 p-2'>Join Room</button>
 
     </form>
   )
