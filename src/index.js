@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals"
 import Home from "./pages/Home"
 import Room from "./pages/Room"
 import { SocketProvider } from "./context/SocketProvider"
+import Error from "./pages/Error"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/room/:roomId" element={<Room />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </SocketProvider>
     </BrowserRouter>

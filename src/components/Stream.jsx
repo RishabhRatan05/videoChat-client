@@ -7,7 +7,7 @@ const Stream = ({stream}) => {
         if(streamRef.current) streamRef.current.srcObject = stream
     },[stream])
   return (
-    <video ref={streamRef} autoPlay muted={true} className='w-full border-2'></video>
+    <video ref={streamRef} autoPlay muted={true} className='w-fit border-2'></video>
   )
 }
 

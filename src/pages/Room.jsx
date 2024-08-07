@@ -143,7 +143,7 @@ const Room = () => {
     handleNegoNeedFinal,
   ]);
   return (
-    <div className='bg-gradient-to-tr from-[#179BAE] to bg-purple-500 h-screen'>
+    <div className='bg-gradient-to-tr from-[#179BAE] to bg-purple-500 '>
       <ToastContainer/>
       <div className='mx-4'>
         <div className='text-purple-400'>
@@ -154,13 +154,13 @@ const Room = () => {
         </div>
       <div className='flex flex-col sm:grid grid-cols-2 p-2 gap-2'>
       {myStream && 
-          <div className='flex flex-col items-center justify-center'>
+          <div className='flex flex-col items-center justify-center sm:h-[80vh]'>
         <h1 className='bg-orange-400 text-white px-2 rounded-md w-fit'>You</h1>
         <Stream stream={myStream}/>
           </div>
         }
       {remoteStream &&
-        <div className='flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center sm:h-[80vh]'>
       <h1 className='bg-sky-400 text-white px-2 rounded-md w-fit'>Remote</h1>
 
 
